@@ -11,19 +11,8 @@ import mysql.connector as bd
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 
-#cnx = bd.connect(user='root', password = 'root', host = '104.154.155.31', database = 'Times')
-#conn = cnx.cursor()
-
-credentials = GoogleCredentials.get_application_default()
-
-service = discovery.build('sqladmin', 'v1beta4', credentials=credentials)
-
-# Project ID of the project that contains the instance.
-project = 'DataOps'  # TODO: Update placeholder value.
-
-# Database instance ID. This does not include the project ID.
-instance = 'root'  # TODO: Update placeholder value.
-
+cnx = bd.connect(user='root', password = 'root', host = '104.154.155.31', database = 'Times')
+conn = cnx.cursor()
 
 def scrape_this(uri="/pages/forms/"):
   page = requests.get("https://scrapethissite.com" + uri)
@@ -61,11 +50,5 @@ hockey_team_df = pd.concat(temp_dfs, axis=0).reset_index()
 hockey_team_df.sort_values(["year", "name"], inplace=True)
 
 for time in hockey_team_df.values:
-  database_body = {
-    'id':time[0],
-    'nome':time[1],
-    'vitoria':time[3],
-    'derrota':time[4]
-}
-  request = service.databases().insert(project=project, instance=instance, body=database_body)
-  response = request.execute()
+  query = f"insert into times values({time[0]},{time[1]},{time[3]},{time[4]})"
+  conn.execute(query)  
