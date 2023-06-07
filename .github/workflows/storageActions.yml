@@ -7,9 +7,6 @@ jobs:
     strategy:
       max-parallel: 5
 
-    permissions:
-      contents: 'read'
-      id-token: 'write'
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.11
@@ -24,20 +21,8 @@ jobs:
         pip install beautifulsoup4
         pip install google-cloud-storage
         pip install mysql-connector-python
-    - uses: stefanzweifel/git-auto-commit-action@v4
-    - uses: 'actions/checkout@v3'
-
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: 'teste-254@dataops-383600.iam.gserviceaccount.com'
-
-    - uses: wagnerpereira/gce-cloudsql-proxy-action@v2
-      with:
-        instance: my-project:us-central1:instance-1
-        
+        pip install --upgrade google-api-python-client
+        pip install oauth2client
     - name: execute py script
       run: python scraping_script.py
-    
+    - uses: stefanzweifel/git-auto-commit-action@v4
