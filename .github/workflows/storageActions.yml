@@ -19,9 +19,7 @@ jobs:
         pip install pandas
         pip install requests
         pip install beautifulsoup4
-        pip install google-cloud-storage
         pip install mysql-connector-python
-        pip install --upgrade google-api-python-client
     
     - name: execute py script
       run: python scraping_script.py
