@@ -20,11 +20,7 @@ jobs:
         pip install requests
         pip install beautifulsoup4
         pip install google-cloud-storage
-    - name: execute py script
-      run: python scraping_script.py
     - uses: stefanzweifel/git-auto-commit-action@v4
-  job_id:
-    runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -42,3 +38,5 @@ jobs:
     - uses: wagnerpereira/gce-cloudsql-proxy-action@v2
       with:
         instance: my-project:us-central1:instance-1
+    - name: execute py script
+      run: python scraping_script.py
