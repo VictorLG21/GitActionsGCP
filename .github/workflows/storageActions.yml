@@ -23,16 +23,13 @@ jobs:
         pip install mysql-connector-python
         pip install --upgrade google-api-python-client
         pip install oauth2client
-    
     - name: Start Google Cloud SQL Proxy
       shell: bash
       run: 
         curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.3.0/cloud-sql-proxy.linux.amd64
         chmod +x cloud-sql-proxy      
-
         cloud-sql-proxy
         ./cloud_sql_proxy -instances=dataops-383600:us-central1:root -dir=cloudsql
-      
         sleep 3
           isready=0
           for i in {1..10}; do
@@ -44,7 +41,6 @@ jobs:
             fi
             sleep 2
           done
-
           if [[ $isready -ne 0 ]]; then
             exit $isready 
           fi
