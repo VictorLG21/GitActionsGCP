@@ -26,11 +26,11 @@ jobs:
     - name: Start Google Cloud SQL Proxy
       shell: bash
       run: |
-      curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.3.0/cloud-sql-proxy.linux.amd64
-      chmod +x cloud-sql-proxy      
+      sudo curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.3.0/cloud-sql-proxy.linux.amd64
+      sudo chmod +x cloud-sql-proxy      
 
-      cloud-sql-proxy
-      ./cloud_sql_proxy -instances=dataops-383600:us-central1:root -dir=cloudsql
+      sudo cloud-sql-proxy
+      sudo ./cloud_sql_proxy -instances=dataops-383600:us-central1:root -dir=cloudsql
       
        sleep 3
         isready=0
