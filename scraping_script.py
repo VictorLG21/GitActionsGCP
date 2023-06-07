@@ -11,8 +11,8 @@ import mysql.connector as bd
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
 
-cnx = bd.connect(user='root', password = 'root', host = '104.154.155.31', database = 'Times')
-conn = cnx.cursor()
+#cnx = bd.connect(user='root', password = 'root', host = '104.154.155.31', database = 'Times')
+#conn = cnx.cursor()
 
 credentials = GoogleCredentials.get_application_default()
 
