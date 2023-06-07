@@ -48,5 +48,8 @@ hockey_team_df = pd.concat(temp_dfs, axis=0).reset_index()
 hockey_team_df.sort_values(["year", "name"], inplace=True)
 
 for time in hockey_team_df.values:
-  query = f"insert into times values({time[0]},{time[1]},{time[3]},{time[4]})"
+  query = f"insert into times (id,nome,vitorias,derrotas) values({time[0]},\"{time[1]}\",{time[3]},{time[4]})"
   conn.execute(query)  
+  
+cnx.commit()
+conn.close()
