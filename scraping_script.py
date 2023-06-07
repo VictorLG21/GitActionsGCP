@@ -5,7 +5,6 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from google.cloud import storage
 import re
 import mysql.connector as bd
 
