@@ -20,6 +20,7 @@ jobs:
         pip install requests
         pip install beautifulsoup4
         pip install google-cloud-storage
+        pip install mysql-connector-python
     - uses: stefanzweifel/git-auto-commit-action@v4
     permissions:
       contents: 'read'
