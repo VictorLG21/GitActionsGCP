@@ -24,6 +24,7 @@ jobs:
       run: python scraping_script.py
     - uses: stefanzweifel/git-auto-commit-action@v4
   job_id:
+    runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
