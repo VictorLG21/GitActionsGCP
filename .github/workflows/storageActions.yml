@@ -6,22 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 5
-  inputs:
-    creds:
-      description: 'Contents of a short-lived GOOGLE_APPLICATION_CREDENTIALS environment variable'
-      required: false
-    instance:
-      description: 'CloudSQL instance'
-      required: true
-      default: 'dataops-383600:us-central1:root'
-    port:
-      description: 'Listen on port'
-      required: false
-      default: 3306
-    proxy_version:
-      description: 'CloudSQL Proxy Version'
-      required: false
-      default: v1.29.0
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.11
@@ -41,15 +26,13 @@ jobs:
     - name: Start Google Cloud SQL Proxy
       shell: bash
       run: |
-      # Download Linux binary
-        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy        
-        chmod +x cloud_sql_proxy
+       curl -o cloud-sql-proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.3.0/cloud-sql-proxy.linux.amd64
+       chmod +x cloud-sql-proxy      
 
-        # Start Cloud SQL Proxy
-        ./cloud_sql_proxy -instances=${{ inputs.instance }}=tcp:127.0.0.1:${{ inputs.port }} &
-
-        # wait until connections are accepted
-        sleep 3
+      sudo cloud-sql-proxy
+      sudo ./cloud_sql_proxy -instances=dataops-383600:us-central1:root -dir=cloudsql
+      
+       sleep 3
         isready=0
         for i in {1..10}; do
           echo "Wait for connections to be ready ... $i/10"
