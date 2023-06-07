@@ -2,24 +2,6 @@ name: Python GitActions
 on: push
 
 jobs:
-  job_id:
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
-    steps:
-    - uses: 'actions/checkout@v3'
-
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: 'teste-254@dataops-383600.iam.gserviceaccount.com'
-
-    - uses: wagnerpereira/gce-cloudsql-proxy-action@v2
-      with:
-        instance: my-project:us-central1:instance-1
   build-linux:
     runs-on: ubuntu-latest
     strategy:
@@ -41,3 +23,21 @@ jobs:
     - name: execute py script
       run: python scraping_script.py
     - uses: stefanzweifel/git-auto-commit-action@v4
+  job_id:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'teste-254@dataops-383600.iam.gserviceaccount.com'
+
+    - uses: wagnerpereira/gce-cloudsql-proxy-action@v2
+      with:
+        instance: my-project:us-central1:instance-1
